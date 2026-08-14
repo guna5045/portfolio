@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Github, ExternalLink, Cpu, Database, Server, Terminal, Activity, ShieldCheck, CheckCircle2, Cloud, Layers, Lightbulb, Rocket, ArrowRight, Clock } from 'lucide-react';
+import { X, Github, ExternalLink, Cpu, Database, Server, Terminal, Activity, ShieldCheck, CheckCircle2, Cloud, Layers, Lightbulb, Rocket, ArrowRight } from 'lucide-react';
 import { ArchitectureDiagramCard } from './case-study/ArchitectureDiagramCard';
 import { DatabaseERDCard } from './case-study/DatabaseERDCard';
 import { CloudInfrastructureCard } from './case-study/CloudInfrastructureCard';
@@ -52,12 +52,33 @@ export const ProjectModal = ({ project, onClose }) => {
         style={{ maxWidth: '1050px', maxHeight: '92vh', overflowY: 'auto' }}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="modal-close-btn" onClick={onClose} aria-label="Close Case Study Modal">
-          <X size={20} />
-        </button>
+        {/* Sticky Top-Right Close Button Header */}
+        <div style={{
+          position: 'sticky',
+          top: '0px',
+          zIndex: 100,
+          display: 'flex',
+          justifyContent: 'flex-end',
+          margin: '-1rem -1rem 0 0',
+          pointerEvents: 'none'
+        }}>
+          <button
+            className="modal-close-btn"
+            onClick={onClose}
+            aria-label="Close Case Study Modal"
+            style={{
+              pointerEvents: 'auto',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.6)',
+              backgroundColor: 'var(--bg-card)',
+              border: '1px solid var(--border-color-hover)'
+            }}
+          >
+            <X size={20} />
+          </button>
+        </div>
 
         {/* Modal Header */}
-        <div style={{ marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid var(--border-color)' }}>
+        <div style={{ marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid var(--border-color)', marginTop: '-1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
             <span className="section-tag" style={{ fontSize: '0.75rem', marginBottom: 0 }}>
               Full Engineering Case Study
@@ -310,19 +331,9 @@ export const ProjectModal = ({ project, onClose }) => {
             <Github size={16} /> View Code on GitHub
           </a>
 
-          {project.liveDemoUrl ? (
-            <a href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              <ExternalLink size={16} /> Open Live Website
-            </a>
-          ) : (
-            <button
-              disabled
-              className="btn btn-primary"
-              style={{ opacity: 0.65, cursor: 'not-allowed', backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)', border: '1px solid var(--border-color)' }}
-            >
-              <Clock size={16} /> Coming Soon
-            </button>
-          )}
+          <a href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+            <ExternalLink size={16} /> Open Live Website
+          </a>
         </div>
       </div>
     </div>

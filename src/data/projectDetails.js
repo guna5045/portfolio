@@ -171,7 +171,7 @@ export const PROJECTS_DATA = [
       secondary: "/assets/images/apexpulse-2.png"
     },
     githubUrl: "https://github.com/guna5045/Apex-Pulse",
-    liveDemoUrl: null, // Disabled Coming Soon button
+    liveDemoUrl: "https://apex-pulse-tau.vercel.app/",
 
     // 1. Problem Statement
     problemStatement: {

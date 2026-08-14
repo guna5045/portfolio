@@ -13,6 +13,20 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.portfolio-app {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 ::selection {
