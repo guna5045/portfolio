@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Linkedin, Github, Mail } from 'lucide-react';
+import { Download, Linkedin, Github } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { trackResumeDownload, trackSocialClick } from '../utils/analytics';
 
@@ -20,12 +20,12 @@ export const RecruiterFloatingBar = () => {
   return (
     <aside
       aria-label="Quick Action Navigation Bar"
+      className="recruiter-floating-bar desktop-only-floating-bar"
       style={{
         position: 'fixed',
         bottom: '1.5rem',
         right: '1.5rem',
         zIndex: 1100,
-        display: 'flex',
         alignItems: 'center',
         gap: '0.6rem',
         backgroundColor: 'rgba(18, 24, 38, 0.95)',

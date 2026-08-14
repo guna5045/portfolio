@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileText } from 'lucide-react';
+import { Menu, X, FileText, Github, Linkedin, Mail } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 export const Navbar = ({ activeSection }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { resumeUrl, socials } = PORTFOLIO_DATA.personal;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,17 +50,33 @@ export const Navbar = ({ activeSection }) => {
               </li>
             );
           })}
-          <li>
+
+          <li style={{ marginTop: mobileOpen ? '0.5rem' : 0 }}>
             <a
-              href={PORTFOLIO_DATA.personal.resumeUrl}
+              href={resumeUrl}
               download="Gunashekhar_Resume.pdf"
               className="btn btn-primary"
               style={{ padding: '0.45rem 1.1rem', fontSize: '0.85rem' }}
+              onClick={() => setMobileOpen(false)}
             >
               <FileText size={15} />
-              Resume
+              Resume PDF
             </a>
           </li>
+
+          {mobileOpen && (
+            <li className="mobile-social-menu-row" style={{ display: 'flex', gap: '1rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)', justifyContent: 'center' }}>
+              <a href={socials.github} target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="GitHub Profile">
+                <Github size={18} />
+              </a>
+              <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="LinkedIn Profile">
+                <Linkedin size={18} />
+              </a>
+              <a href={`mailto:${socials.email}`} className="social-icon-btn" aria-label="Email Contact">
+                <Mail size={18} />
+              </a>
+            </li>
+          )}
         </ul>
 
         <button
