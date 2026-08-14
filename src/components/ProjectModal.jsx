@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { X, Github, ExternalLink, Cpu, Database, Server, Terminal, Activity, ShieldCheck, CheckCircle2, Cloud, Layers, Lightbulb, Rocket, ArrowRight } from 'lucide-react';
 import { ArchitectureDiagramCard } from './case-study/ArchitectureDiagramCard';
 import { DatabaseERDCard } from './case-study/DatabaseERDCard';
@@ -12,25 +12,38 @@ export const ProjectModal = ({ project, onClose }) => {
 
   const isApexPulse = project.id === 'apexpulse';
 
-  // Automatically scroll modal to top when project or activeTab changes & lock body scroll
-  useEffect(() => {
-    setActiveTab('overview');
+  // Helper function to scroll modal content container strictly to top (scrollTop = 0)
+  const scrollToTop = () => {
     if (modalContentRef.current) {
       modalContentRef.current.scrollTop = 0;
     }
+  };
 
-    const originalStyle = window.getComputedStyle(document.body).overflow;
+  // Lock background body scroll while modal is open & reset modal scroll on project change
+  useLayoutEffect(() => {
+    setActiveTab('overview');
+    scrollToTop();
+
+    // Secondary micro-task scroll reset to guarantee scrollTop = 0 after browser paint
+    const timer = setTimeout(() => {
+      scrollToTop();
+      requestAnimationFrame(scrollToTop);
+    }, 0);
+
+    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
     return () => {
-      document.body.style.overflow = originalStyle;
+      clearTimeout(timer);
+      document.body.style.overflow = originalOverflow;
     };
   }, [project]);
 
-  useEffect(() => {
-    if (modalContentRef.current) {
-      modalContentRef.current.scrollTop = 0;
-    }
+  // Reset scroll to top whenever active tab changes inside the modal
+  useLayoutEffect(() => {
+    scrollToTop();
+    const timer = setTimeout(scrollToTop, 0);
+    return () => clearTimeout(timer);
   }, [activeTab]);
 
   const tabs = [
@@ -47,23 +60,16 @@ export const ProjectModal = ({ project, onClose }) => {
       <div
         ref={modalContentRef}
         className="modal-content"
-        style={{
-          maxWidth: '1050px',
-          maxHeight: '88vh',
-          overflowY: 'auto',
-          position: 'relative',
-          padding: 0
-        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Sticky Header Bar containing Title, Subtitle, Tabs, and Pinned Close Button */}
         <div style={{
           position: 'sticky',
           top: 0,
-          zIndex: 30,
+          zIndex: 100,
           backgroundColor: 'var(--bg-card)',
           borderBottom: '1px solid var(--border-color)',
-          padding: '1.5rem 1.75rem 0.75rem 1.75rem',
+          padding: '1.25rem 1.5rem 0.65rem 1.5rem',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.4)'
         }}>
           {/* Always Visible Close Button Pinned at Top Right */}
@@ -72,7 +78,7 @@ export const ProjectModal = ({ project, onClose }) => {
             aria-label="Close Case Study Modal"
             style={{
               position: 'absolute',
-              top: '1.25rem',
+              top: '1rem',
               right: '1.25rem',
               width: '36px',
               height: '36px',
@@ -85,20 +91,20 @@ export const ProjectModal = ({ project, onClose }) => {
               justifyContent: 'center',
               cursor: 'pointer',
               transition: 'var(--transition-fast)',
-              zIndex: 40
+              zIndex: 110
             }}
           >
             <X size={18} />
           </button>
 
-          <div style={{ paddingRight: '2.5rem', marginBottom: '1rem' }}>
-            <span className="section-tag" style={{ fontSize: '0.75rem', marginBottom: '0.4rem', display: 'inline-flex' }}>
+          <div style={{ paddingRight: '2.5rem', marginBottom: '0.85rem' }}>
+            <span className="section-tag" style={{ fontSize: '0.75rem', marginBottom: '0.3rem', display: 'inline-flex' }}>
               Full Engineering Case Study
             </span>
-            <h2 style={{ fontSize: '1.8rem', color: 'var(--text-main)', margin: '0.2rem 0 0.3rem 0' }}>
+            <h2 style={{ fontSize: '1.75rem', color: 'var(--text-main)', margin: '0.1rem 0 0.25rem 0' }}>
               {project.title}
             </h2>
-            <p style={{ color: 'var(--accent-primary)', fontSize: '0.95rem', fontWeight: 600 }}>
+            <p style={{ color: 'var(--accent-primary)', fontSize: '0.92rem', fontWeight: 600 }}>
               {project.subtitle}
             </p>
           </div>
@@ -134,8 +140,8 @@ export const ProjectModal = ({ project, onClose }) => {
           </div>
         </div>
 
-        {/* Modal Scrollable Body */}
-        <div style={{ padding: '1.75rem' }}>
+        {/* Modal Scrollable Body Content */}
+        <div style={{ padding: '1.5rem 1.75rem 2rem 1.75rem' }}>
           {/* Tab 1: Overview & Features */}
           {activeTab === 'overview' && (
             <div>
