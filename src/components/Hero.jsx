@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Github, Linkedin, Mail, ArrowRight, Download, Code2 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import profileImg from '../assets/images/IMG.jpg';
 
 export const Hero = () => {
   const { name, title, subtitle, description, profileImage, resumeUrl, socials } = PORTFOLIO_DATA.personal;
   const [imgError, setImgError] = useState(false);
+
+  // Use imported image asset for Vite production bundling with fallback to public asset URL
+  const heroImageSrc = profileImg || profileImage || '/assets/images/IMG.jpg';
 
   return (
     <section id="hero" className="section section-full">
@@ -74,7 +78,7 @@ export const Hero = () => {
           <div className="hero-profile-ring">
             {!imgError ? (
               <img
-                src={profileImage}
+                src={heroImageSrc}
                 alt={name}
                 className="hero-profile-img"
                 onError={() => setImgError(true)}
