@@ -26,6 +26,7 @@ body {
 .portfolio-app {
   overflow-x: hidden;
   width: 100%;
+  min-height: 100vh;
   position: relative;
 }
 
@@ -36,7 +37,7 @@ body {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { X, ZoomIn, ZoomOut, RotateCcw, Maximize2, Download, FileText } from 'lucide-react';
+import { X, ZoomIn, ZoomOut, RotateCcw, Maximize2, Download, ShieldCheck, FileText } from 'lucide-react';
 
-export const ResumeViewerModal = ({ resumeUrl = '/resume.pdf', onClose }) => {
+export const ResumeViewerModal = ({ resumeUrl, onClose }) => {
   const [zoom, setZoom] = useState(100);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -39,7 +39,7 @@ export const ResumeViewerModal = ({ resumeUrl = '/resume.pdf', onClose }) => {
             <FileText size={22} style={{ color: 'var(--accent-primary)' }} />
             <div>
               <h3 style={{ fontSize: '1.2rem', color: 'var(--text-main)' }}>Gunashekhar_Resume.pdf</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Software Engineering Resume Document Viewer</p>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Salesforce AMTS Candidate Document Viewer</p>
             </div>
           </div>
 

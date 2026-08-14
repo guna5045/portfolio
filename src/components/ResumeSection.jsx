@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Download, FileText, Eye, ExternalLink } from 'lucide-react';
+import { Download, FileText, Eye } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { ResumeViewerModal } from './ResumeViewerModal';
 
 export const ResumeSection = () => {
-  const resumeUrl = "/resume.pdf";
+  const { resumeUrl } = PORTFOLIO_DATA.personal;
   const [showViewer, setShowViewer] = useState(false);
 
   return (
@@ -12,11 +12,11 @@ export const ResumeSection = () => {
       <div className="container" style={{ textAlign: 'center' }}>
         <div className="section-tag" style={{ margin: '0 auto 1rem auto' }}>
           <FileText size={14} />
-          Curriculum Vitae
+          Document
         </div>
         <h2 className="section-title">Resume</h2>
         <p className="section-subtitle" style={{ margin: '0 auto 2.5rem auto' }}>
-          View or download my latest software engineering resume.
+          Download my latest resume.
         </p>
 
         <div style={{
@@ -47,21 +47,10 @@ export const ResumeSection = () => {
             Gunashekhar Ammajigari - Resume
           </h3>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '2rem' }}>
-            Official resume detailing education, technical stack, projects, and achievements.
+            PDF document containing education, technical skills, projects, and achievements.
           </p>
 
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a
-              href={resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-secondary btn-lg"
-              style={{ padding: '0.9rem 1.8rem', fontSize: '1rem' }}
-            >
-              <ExternalLink size={18} />
-              View Resume
-            </a>
-
             <a
               href={resumeUrl}
               download="Gunashekhar_Resume.pdf"
@@ -80,11 +69,11 @@ export const ResumeSection = () => {
 
             <button
               onClick={() => setShowViewer(true)}
-              className="btn btn-outline btn-lg"
-              style={{ padding: '0.9rem 1.5rem', fontSize: '1rem' }}
+              className="btn btn-secondary btn-lg"
+              style={{ padding: '0.9rem 1.8rem', fontSize: '1rem' }}
             >
               <Eye size={18} />
-              Preview Modal
+              Preview Resume
             </button>
           </div>
         </div>
